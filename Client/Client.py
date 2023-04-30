@@ -1,5 +1,6 @@
 import requests
 import Employee
+import json
 isOpen=True
 url="http://127.0.0.1:5000"
 
@@ -37,21 +38,22 @@ def getAllEmployees():
     pass
 
 
-requestdic = {
-                 0: testServer(),
-                 1: addEmployee(),
-                 2: getEmployeeByID(),
-                 3: getEmployeeByName(),
-                 4: updateEmployee(),
-                 5: deleteEmployee(),
-                 6: getAllEmployees(),
-                 7: importEmployeesFromCSV(),
-                 8: exportEmployeesFromCSV(),
-                 9: exit
-              }
+# requestdic = {
+#                  0: testServer(),
+#                  1: addEmployee(),
+#                  2: getEmployeeByID(),
+#                  3: getEmployeeByName(),
+#                  4: updateEmployee(),
+#                  5: deleteEmployee(),
+#                  6: getAllEmployees(),
+#                  7: importEmployeesFromCSV(),
+#                  8: exportEmployeesFromCSV(),
+#                  9: exit
+#               }
 
 
 
 if __name__ == "__main__":
 
      addEmployee("yontan",'m',12,123123,"devops",123333)
+     testServer()
