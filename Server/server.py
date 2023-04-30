@@ -1,6 +1,6 @@
 from flask import Flask , render_template
 
-app = Flask(__name__, template_folder='/23423/templates')
+app = Flask(__name__,template_folder="../templates")
 
 # Pass the required route to the decorator.
 @app.route("/test")

@@ -1,4 +1,5 @@
 import requests
+import Employee
 isOpen=True
 
 # requestdic = {
@@ -21,8 +22,8 @@ def main():
 def testServer():
     print(requests.get("http://127.0.0.1:5000/test").text)
 
-def addEmployee():
-    pass
+def addEmployee(name,gender,age,id,job,salary):
+    emp = Employee(name,gender,age,id,job,salary)
 
 def getEmployeeByID():
     pass
