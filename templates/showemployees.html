@@ -33,15 +33,28 @@
 <body>
     <h1>Employee Data</h1>
     <center>
+
+
         <div style="display: flex; justify-content: flex-start ; justify-content: space-around;">
              <form method="POST" action="{{ url_for('showemplist') }}">
              Search By ID: <input type="number" name="id">
                  <input type="submit" value="Search">
         </form>
+
+
+
              <form method="POST" action="{{ url_for('showemplist') }}">
                         Search By Name: <input type="text" name="name">
         <input type="submit" value="Search">
+                  </form>
+
+
+
+             <form method="POST" action="{{ url_for('showemplist') }}">
+                        Order By Job: <input type="button" value="Order" name="orderbyjob">
         </form>
+
+
         </div>
     </center>
     <table>

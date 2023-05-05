@@ -67,7 +67,11 @@ def showemplist():
              id = request.form['id']
              cur.execute(f"SELECT * FROM employees WHERE id = {id}")
              data = cur.fetchall()
-    print(data)
+        elif 'orderbyjob' in request.form:
+            id= request.form['id']
+            cur.execute('select * from employees order by job ASC')
+            data = cur.fetchall()
+
     return render_template('showemployees.html', data=data)
 
 
