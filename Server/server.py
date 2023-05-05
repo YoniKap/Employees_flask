@@ -8,9 +8,24 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB']='EmployeesApp'
 mysql = MySQL(app)
 # Pass the required route to the decorator.
+
+
+
+
+
+
+
+
 @app.route("/test")
 def hello():
     return "Healthy"
+
+
+
+
+
+
+
 
 @app.route('/Register_employee', methods=['GET','POST'])
 def register_employee():
@@ -27,11 +42,38 @@ def register_employee():
        mysql.connection.commit()
        newdata=json.dumps({"name": Name, "gender": Gender, "age": Age, "id": ID, "job": Job, "salary": Salary})
 
-       return "<center><h1>New Employee Form Was Submitted Successfully!</h1>"\
-              "<div>NAME: {} <br><br> GENDER: {} <br><br> AGE: {} <br><br> ID: {} <br><br> JOB: {} <br><br> " \
-              "SALARY :{}</div>  </center>".format(Name,Gender,Age,ID,Job,Salary)
+       return render_template("RegisterSucess.html", Name=Name, Gender=Gender, Age=Age, ID=ID, Job=Job, Salary=Salary)
 
     return render_template("Register.html")
+
+
+
+
+
+
+
+@app.route("/Show_employee_list", methods=['GET','POST'])
+def showemplist():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM employees')
+    data = cur.fetchall()
+    if request.method == 'POST' :
+        if 'name' in request.form:
+             name = request.form['name']
+             cur.execute(f"SELECT * FROM employees WHERE name = '{name}'")
+             data = cur.fetchall()
+        # If the form is submitted with an ID input, retrieve the ID from the form data
+        elif 'id' in request.form:
+             id = request.form['id']
+             cur.execute(f"SELECT * FROM employees WHERE id = {id}")
+             data = cur.fetchall()
+    print(data)
+    return render_template('showemployees.html', data=data)
+
+
+
+
+
 
 
 @app.route("/", methods=['GET', 'POST'])

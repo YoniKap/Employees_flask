@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <center><title>Employee Data</title></center>
+
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            background-color: #0040ff;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Data</h1>
+    <center>
+        <div style="display: flex; justify-content: flex-start ; justify-content: space-around;">
+             <form method="POST" action="{{ url_for('showemplist') }}">
+             Search By ID: <input type="number" name="id">
+                 <input type="submit" value="Search">
+        </form>
+             <form method="POST" action="{{ url_for('showemplist') }}">
+                        Search By Name: <input type="text" name="name">
+        <input type="submit" value="Search">
+        </form>
+        </div>
+    </center>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>₪{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <center> <button onclick="window.location.href='http://127.0.0.1:5000'">Home</button></center>
+</body>
+</html>
