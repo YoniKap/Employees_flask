@@ -1,12 +1,35 @@
 <center>
-    <h1>PLEASE ENTER EMPLOYEE DETAILS BELOW:</h1></center><center><form method="Post">
-              <p style="text-align:center;">
-              Name: <input type="text" name=Name><br><br>
-              Gender(f/m): <input type="text" name=Gender pattern="[fm]" required aria-required="true"><br><br>
-              Age: <input type="number" name=Age min="18" max="100" required aria-required="true"><br><br>
-              ID: <input type="number" name=ID maxlength="12" required aria-required="true" ><br><br>
-              Job: <input type="text" name=Job required><br><br>
-              Salary: <input type="number" name=Salary aria-required="true"><br><br>
-              <input type="submit" >
-              </form>
-    </center>
+    <h1>PLEASE ENTER EMPLOYEE DETAILS BELOW:</h1>
+    <form method="POST">
+        <table style="margin: auto;">
+            <tr>
+                <td style="text-align: right;">Name:</td>
+                <td><input type="text" name="Name" required aria-required="true"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Gender (f/m):</td>
+                <td><input type="text" name="Gender" pattern="[fm]" required aria-required="true"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Age:</td>
+                <td><input type="number" name="Age" min="18" max="100" required aria-required="true"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">ID:</td>
+                <td><input type="number" name="ID" maxlength="12" required aria-required="true"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Job:</td>
+                <td><input type="text" name="Job" required></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Salary:</td>
+                <td><input type="number" name="Salary" aria-required="true"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: left;"><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+</center>

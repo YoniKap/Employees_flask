@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
 import json
+import csv
+
+
+
+
+
 app = Flask(__name__,template_folder="../templates")
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
@@ -55,7 +61,7 @@ def register_employee():
 @app.route("/Show_employee_list", methods=['GET','POST'])
 def showemplist():
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM employees')
+    cur.execute('SELECT * FROM employees ORDER BY name ASC')
     data = cur.fetchall()
     if request.method == 'POST' :
         if 'name' in request.form:
@@ -67,6 +73,10 @@ def showemplist():
              id = request.form['id']
              cur.execute(f"SELECT * FROM employees WHERE id = {id}")
              data = cur.fetchall()
+        elif 'delete' in request.form:
+            delete = request.form['delete']
+            cur.execute(f"DELETE FROM employees WHERE id = {delete}")
+            mysql.connection.commit()
         elif 'orderbyjob' in request.form:
             id= request.form['id']
             cur.execute('select * from employees order by job ASC')
