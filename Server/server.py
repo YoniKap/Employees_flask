@@ -63,22 +63,33 @@ def showemplist():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM employees ORDER BY name ASC')
     data = cur.fetchall()
+
     if request.method == 'POST' :
+
         if 'name' in request.form:
              name = request.form['name']
-             cur.execute(f"SELECT * FROM employees WHERE name = '{name}'")
+             if name =='':
+                 cur.execute(f"SELECT * FROM employees")
+             else:
+                 cur.execute(f"SELECT * FROM employees WHERE name = '{name}'")
              data = cur.fetchall()
+
         # If the form is submitted with an ID input, retrieve the ID from the form data
         elif 'id' in request.form:
-             id = request.form['id']
-             cur.execute(f"SELECT * FROM employees WHERE id = {id}")
+             id = str(request.form['id'])
+             if id == '':
+                 cur.execute(f"SELECT * FROM employees")
+             else:
+                 cur.execute(f"SELECT * FROM employees WHERE id = '{id}'")
              data = cur.fetchall()
+
         elif 'delete' in request.form:
-            delete = request.form['delete']
-            cur.execute(f"DELETE FROM employees WHERE id = {delete}")
+            delete = str(request.form['delete'])
+            cur.execute(f"SELECT * FROM employees")
+            cur.execute(f"DELETE FROM employees WHERE id = '{delete}'")
             mysql.connection.commit()
+
         elif 'orderbyjob' in request.form:
-            id= request.form['id']
             cur.execute('select * from employees order by job ASC')
             data = cur.fetchall()
 
