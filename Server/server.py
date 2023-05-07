@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 import json
 import csv
 
-
+order='SELECT * FROM employees ORDER BY name ASC'
 
 
 
@@ -35,7 +35,10 @@ def hello():
 
 @app.route('/Register_employee', methods=['GET','POST'])
 def register_employee():
+    notexist=True
     cur = mysql.connection.cursor()
+    cur.execute("SELECT id From employees;")
+    check = cur.fetchall()
     if request.method == 'POST':
        Name= request.form.get('Name')
        Gender = request.form.get('Gender')
@@ -46,11 +49,9 @@ def register_employee():
        sql = f"INSERT INTO EmployeesApp.employees (name, id, gender, job, salary, age) VALUES ('{Name}', '{ID}', '{Gender}', '{Job}', '{Salary}', '{Age}')"
        cur.execute(sql)
        mysql.connection.commit()
-       newdata=json.dumps({"name": Name, "gender": Gender, "age": Age, "id": ID, "job": Job, "salary": Salary})
-
        return render_template("RegisterSucess.html", Name=Name, Gender=Gender, Age=Age, ID=ID, Job=Job, Salary=Salary)
 
-    return render_template("Register.html")
+    return render_template("Register.html",check=check)
 
 
 
@@ -68,8 +69,8 @@ def showemplist():
 
         if 'name' in request.form:
              name = request.form['name']
-             if name =='':
-                 cur.execute(f"SELECT * FROM employees")
+             if name.isspace() or name == '':
+                 cur.execute(order)
              else:
                  cur.execute(f"SELECT * FROM employees WHERE name = '{name}'")
              data = cur.fetchall()
@@ -78,19 +79,23 @@ def showemplist():
         elif 'id' in request.form:
              id = str(request.form['id'])
              if id == '':
-                 cur.execute(f"SELECT * FROM employees")
+                 cur.execute(order)
              else:
                  cur.execute(f"SELECT * FROM employees WHERE id = '{id}'")
              data = cur.fetchall()
 
         elif 'delete' in request.form:
             delete = str(request.form['delete'])
-            cur.execute(f"SELECT * FROM employees")
+            cur.execute(order)
             cur.execute(f"DELETE FROM employees WHERE id = '{delete}'")
             mysql.connection.commit()
 
         elif 'orderbyjob' in request.form:
             cur.execute('select * from employees order by job ASC')
+            data = cur.fetchall()
+
+        elif 'orderbysalary' in request.form:
+            cur.execute('SELECT * FROM employees ORDER BY salary DESC;')
             data = cur.fetchall()
 
     return render_template('showemployees.html', data=data)
