@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td style="text-align: right;">ID:</td>
-                <td><input type="number" name="ID" maxlength="12" required aria-required="true"></td>
+                <td><input type="text" name="ID" maxlength="9" required aria-required="true"></td>
             </tr>
             <tr>
                 <td style="text-align: right;">Job:</td>
@@ -35,4 +35,24 @@
 
 </center>
  <center><button onclick="window.location.href='http://127.0.0.1:5000'">Home</button></center>
+<form method="POST" onsubmit="return validateForm()">
+    <!-- Form fields here -->
+</form>
+ <script>
+    function validateForm() {
+        var enteredID = document.getElementsByName('ID').value;
+        var existingIDs = [
+            {% for id in existingIDs %}
+            '{{ id }}',
+            {% endfor %}
+        ];
 
+        // Check if the entered ID already exists
+        if (existingIDs.includes(enteredID)) {
+            alert('Error: ID already exists in the Database!');
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    }
+</script>

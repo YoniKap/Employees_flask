@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Salary stats</title>
+
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            background-color: #0040ff;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        bt{
+        }
+    </style>
+</head>
+<body>
+    <center><h1>Salary Stats</h1></center>
+
+      <form method="POST" action="{{ url_for('showsalarystats') }}">
+             Search By Job: <input type="text" name="job">
+                           <input type="submit" value="Search">
+        </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Job</th>
+                <th>avarage_salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>₪{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <center>  <div >
+                    <button onclick="window.location.href='http://127.0.0.1:5000'">Home</button>
+            <button onclick="window.location.href='http://127.0.0.1:5000/showsalarystats'">Show Full List</button>
+    </div></center>
+</body>
+</html>

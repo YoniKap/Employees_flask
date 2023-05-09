@@ -3,11 +3,16 @@ from flask_mysqldb import MySQL
 import json
 import csv
 
+url = "http://127.0.0.1:5000"
 order='SELECT * FROM employees ORDER BY name ASC'
 
 
 
 app = Flask(__name__,template_folder="../templates")
+
+
+
+
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -49,9 +54,9 @@ def register_employee():
        sql = f"INSERT INTO EmployeesApp.employees (name, id, gender, job, salary, age) VALUES ('{Name}', '{ID}', '{Gender}', '{Job}', '{Salary}', '{Age}')"
        cur.execute(sql)
        mysql.connection.commit()
-       return render_template("RegisterSucess.html", Name=Name, Gender=Gender, Age=Age, ID=ID, Job=Job, Salary=Salary)
+       return render_template("RegisterSucess.html", Name=Name, Gender=Gender, Age=Age, ID=ID, Job=Job, Salary=Salary,check=check,url=url)
 
-    return render_template("Register.html",check=check)
+    return render_template("Register.html",check=check,url=url)
 
 
 
@@ -102,13 +107,30 @@ def showemplist():
 
 
 
+@app.route("/showsalarystats",methods=['GET','POST'])
+def showsalarystats():
+    cur = mysql.connection.cursor()
+    cur.execute(' SELECT job, AVG(salary) AS average_salary FROM employees GROUP BY job;')
+    info = cur.fetchall()
 
+    if request.method == 'POST' :
+
+        if 'job' in request.form:
+             job = request.form['job']
+             if job.isspace() or job == '':
+                 cur.execute(order)
+             else:
+                 cur.execute(f"SELECT job, AVG(salary) AS average_salary FROM employees WHERE job = '{job}' GROUP BY job;")
+                 info = cur.fetchall()
+
+    return render_template('salarystats.html',data=info)
 
 
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+
+    return render_template("index.html",url=url)
 
 
 if __name__ == "__main__":
